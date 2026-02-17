@@ -31,6 +31,10 @@ if __name__ == '__main__':
         for seq in sorted(seqs):
             if '.DS_Store' in seq or '.ipy' in seq:
                 continue
+            
+            seq_path = os.path.join(data_path, seq)
+            if not os.path.isdir(seq_path):
+                continue
 
             video_cnt += 1  # video sequence number.
             out['videos'].append({'id': video_cnt, 'file_name': seq})

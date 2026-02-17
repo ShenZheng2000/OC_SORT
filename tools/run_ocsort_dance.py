@@ -161,11 +161,13 @@ def main(exp, args, num_gpu):
                        'partially_tracked', 'mostly_lost']
     for k in change_fmt_list:
         fmt[k] = fmt['mota']
-    print(mm.io.render_summary(summary, formatters=fmt, namemap=mm.io.motchallenge_metric_names))
+    # print(mm.io.render_summary(summary, formatters=fmt, namemap=mm.io.motchallenge_metric_names))
+    logger.info("\n" + mm.io.render_summary(summary, formatters=fmt, namemap=mm.io.motchallenge_metric_names))
 
     metrics = mm.metrics.motchallenge_metrics + ['num_objects']
     summary = mh.compute_many(accs, names=names, metrics=metrics, generate_overall=True)
-    print(mm.io.render_summary(summary, formatters=mh.formatters, namemap=mm.io.motchallenge_metric_names))
+    # print(mm.io.render_summary(summary, formatters=mh.formatters, namemap=mm.io.motchallenge_metric_names))
+    logger.info("\n" + mm.io.render_summary(summary, formatters=mh.formatters, namemap=mm.io.motchallenge_metric_names))
     logger.info('Completed')
 
 

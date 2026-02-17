@@ -26,8 +26,13 @@ class YOLOX(nn.Module):
         self.head = head
 
     def forward(self, x, targets=None):
+        # ---- DEBUG: print input shape once ----
+        # print(f"[YOLOX] input x shape: {tuple(x.shape)}")
+
         # fpn output content features of [dark3, dark4, dark5]
         fpn_outs = self.backbone(x)
+
+        # print("[YOLOX] FPN shapes:", [tuple(f.shape) for f in fpn_outs])
 
         if self.training:
             assert targets is not None
