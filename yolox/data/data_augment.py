@@ -295,5 +295,20 @@ class ValTransform:
 
     # assume input is cv2 img for now
     def __call__(self, img, res, input_size):
-        img, _ = preproc(img, input_size, self.means, self.std, self.swap)
-        return img, np.zeros((1, 5))
+        # img, _ = preproc(img, input_size, self.means, self.std, self.swap)
+        # return img, np.zeros((1, 5))
+
+        img, r_ = preproc(img, input_size, self.means, self.std, self.swap)
+
+        # res format: (N, 6) = [x1, y1, x2, y2, cls, id]
+        if res is None or len(res) == 0:
+            raise ValueError("No valid labels for this image, check your dataset annotations! ")
+
+        boxes = res[:, :4].copy()        # xyxy
+        labels = res[:, 4:5].copy()      # class column
+
+        boxes = xyxy2cxcywh(boxes)       # -> cx, cy, w, h
+        boxes *= r_                      # scale to resized coords
+
+        targets = np.hstack((labels, boxes)).astype(np.float32)
+        return img, targets

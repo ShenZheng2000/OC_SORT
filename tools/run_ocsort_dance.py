@@ -67,7 +67,9 @@ def main(exp, args, num_gpu):
         exp.test_size = (args.tsize, args.tsize)
 
     model = exp.get_model()
-    logger.info("Model Summary: {}".format(get_model_info(model, exp.test_size)))
+
+    # NOTE: comment this line for detailed printout debug later!
+    # logger.info("Model Summary: {}".format(get_model_info(model, exp.test_size)))
 
     val_loader = exp.get_eval_loader(args.batch_size, is_distributed, args.test)
     evaluator = MOTEvaluator(
